@@ -16,7 +16,7 @@
             pname = "xspringies";
             version = "1.12";
 
-            src = ./xspringies-1.12.tar.Z;
+            src = ./xspringies-1.12;
 
             postPatch = ''
               rm -v Imakefile
