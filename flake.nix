@@ -27,7 +27,7 @@
                --replace "DDIR = /usr/games/" \
                           "DDIR = $out/" \
                 --replace "CFLAGS = " \
-                          "CFLAGS = -Wno-error=format-security "
+                          "CFLAGS = -Wno-error=format-security -std=c89 "
             '';
 
             buildPhase = ''
