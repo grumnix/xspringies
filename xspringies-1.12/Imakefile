@@ -1,0 +1,43 @@
+# Imakefile for XSpringies
+
+SRCS = xdisp.c misc.c keypress.c widget.c obj.c file.c phys.c
+OBJS = xdisp.o misc.o keypress.o widget.o obj.o file.o phys.o
+
+DEPLIBS =
+LOCAL_LIBRARIES = $(XLIB)
+SYS_LIBRARIES = -lm
+
+# Because the X consortium people are dip-heads
+MKDIRHIER = BourneShell `which mkdirhier`
+
+# Destination directory for xspringies demo files, executable and manpage
+# (Change this to where you want files installed)
+DDIR = /usr/games/
+
+XSPDIR = $(DDIR)lib/xspringies
+BINDIR = $(DDIR)bin
+MANDIR = $(DDIR)man/manx
+
+# Set compression of xsp files
+COMPR     = "gzip -f"
+UNCOMPR   = "gunzip -c"
+COMPREXT = ".gz"
+COMPRFLAGS = -DCOMPRESS=\"$(COMPR)\" -DUNCOMPRESS=\"$(UNCOMPR)\" -DCOMPR_EXT=\"$(COMPREXT)\"
+
+DEFINES = -DDEF_PATH=\"$(XSPDIR)/\" $(COMPRFLAGS)
+
+MakeDirectories(install, $(XSPDIR))
+MakeDirectories(install, $(BINDIR))
+MakeDirectories(install, $(MANDIR))
+
+ComplexProgramTarget(xspringies)
+
+install:: install.man install.lib
+
+# I hate imake
+XSPLIB = lib/
+
+install.lib:
+	/bin/cp $(XSPLIB)* $(XSPDIR)
+# Compress lib files
+	gzip $(XSPDIR)\/*

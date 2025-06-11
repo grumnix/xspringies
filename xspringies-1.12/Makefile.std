@@ -1,0 +1,42 @@
+# Default Makefile for XSpringies
+
+OBJS = xdisp.o misc.o keypress.o widget.o obj.o file.o phys.o
+SRCS = xdisp.c misc.c keypress.c widget.c obj.c file.c phys.c
+
+DDIR = /usr/games/
+
+XSPDIR = $(DDIR)lib/xspringies
+BINDIR = $(DDIR)bin
+MANDIR = $(DDIR)man/manx
+
+# Set compression of xsp files
+COMPR     = "gzip -f"
+UNCOMPR   = "gunzip -c"
+COMPREXT = ".gz"
+COMPRFLAGS = -DCOMPRESS=\"$(COMPR)\" -DUNCOMPRESS=\"$(UNCOMPR)\" -DCOMPR_EXT=\"$(COMPREXT)\"
+
+LIBS = -lm -lX11
+CFLAGS = -O -DDEF_PATH=\"$(XSPDIR)/\" $(COMPRFLAGS)
+
+xspringies: $(OBJS)
+	$(CC) $(CFLAGS) -o xspringies $(OBJS) $(LIBS)
+
+$(OBJS): defs.h
+file.o xdisp.o obj.o phys.o: obj.h
+xdisp.o: bitmap.h title.h bfbm.h
+
+install:: xspringies
+	-@mkdirhier $(BINDIR)
+	cp xspringies $(BINDIR)
+	strip $(BINDIR)/xspringies
+	-@mkdirhier $(MANDIR)
+	cp xspringies.man $(MANDIR)
+
+install::
+	-@mkdirhier $(XSPDIR)
+	/bin/cp lib/* $(XSPDIR)
+# Compress lib files	
+	gzip $(XSPDIR)/*
+
+clean:
+	rm -f $(OBJS) xspringies
