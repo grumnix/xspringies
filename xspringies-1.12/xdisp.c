@@ -1124,13 +1124,12 @@ static boolean x_event()
 	/* No events waiting */
 	if (scan_flag) {
 	    static struct timeval tp, tpo;
-	    static struct timezone tzp;
 	    int difft;
 
 	    if (tpo.tv_sec == 0)
-	      gettimeofday(&tpo, &tzp);
+	      gettimeofday(&tpo, NULL);
 
-	    gettimeofday(&tp, &tzp);
+	    gettimeofday(&tp, NULL);
 	    difft = (tp.tv_sec - tpo.tv_sec) * 1000000 + (tp.tv_usec - tpo.tv_usec);
 
 	    /* Do widget scanning buttons about 30 times / sec */
@@ -1150,19 +1149,18 @@ static boolean x_event()
 
 	if (action != -1 && animate_obj()) {
 	    static struct timeval tp, tpo;
-	    static struct timezone tzp;
 	    static int totaldiff = 0;
 	    static boolean started = FALSE;
 	    int difft;
 
 	    /* Get time the first time through */
 	    if (!started) {
-		gettimeofday(&tp, &tzp);
+		gettimeofday(&tp, NULL);
 		started = TRUE;
 	    }
 	    tpo = tp;
 
-	    gettimeofday(&tp, &tzp);
+	    gettimeofday(&tp, NULL);
 
 	    difft = (tp.tv_sec - tpo.tv_sec) * 1000000 + (tp.tv_usec - tpo.tv_usec);
 
