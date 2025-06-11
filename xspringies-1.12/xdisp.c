@@ -25,6 +25,7 @@
 #include <X11/keysym.h>
 #include <X11/cursorfont.h>
 #include <X11/Xos.h>
+#include <stdlib.h>
 #include "obj.h"
 #include "bitmap.h"
 #include "title.h"
