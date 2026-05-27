@@ -40,12 +40,12 @@
             '';
 
             nativeBuildInputs = with pkgs; [
-              xorg.imake
-              xorg.gccmakedep
+              imake
+              gccmakedep
             ];
 
             buildInputs = with pkgs; [
-              xorg.libX11
+              libx11
             ];
           };
         };
