@@ -25,7 +25,8 @@ typedef char boolean;
 #define COORD_DY(dy)	(-(dy))
 
 /* Font size info */
-#define F_NAME	"6x10"
+/* #define F_NAME	"6x10" */
+#define F_NAME	"6x13"
 #define F_WID	6
 #define F_HT	10
 
